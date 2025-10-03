@@ -46,8 +46,9 @@ namespace dom
 // Singleton w/ Abstract Factory pattern
 class Document_Impl : public virtual dom::Document, public virtual Node_Impl
 {
-public:
+private:
 	Document_Impl(void);
+public:
 
 	virtual ~Document_Impl();
 
