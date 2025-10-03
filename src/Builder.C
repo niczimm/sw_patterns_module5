@@ -83,7 +83,7 @@ const std::string Builder::trim(const std::string & s) const
 }
 
 void Builder::reset() {
-    factory = new Document_Impl();
+    factory = Document_Impl::getInstance();
     elementStack = {};
     currentElement = nullptr;
     currentAttr = nullptr;

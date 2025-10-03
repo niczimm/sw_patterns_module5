@@ -62,7 +62,7 @@ int main(int argc, char** argv)
 
 void testTokenizer(int argc, char** argv)
 {
-	dom::Document *	document	= new Document_Impl;
+	dom::Document *	document	= Document_Impl::getInstance();
 
 	dom::Element *	element	= document->createElement("NewElement");
 	dom::Text *	text	= document->createTextNode("Text Data");
@@ -123,7 +123,7 @@ void testSerializer(int argc, char** argv)
 	//   </element>
 	// </document>
 	//
-	dom::Document *	document	= new Document_Impl;
+	dom::Document *	document	= Document_Impl::getInstance();
 	dom::Element *	root		= document->createElement("document");
 	document->appendChild(root);
 
@@ -197,7 +197,7 @@ void testValidator(int argc, char** argv)
 	schemaElement->addValidChild("attribute2", true);
 	schemaElement->setCanHaveText(true);
 
-	dom::Document *	document	= new DocumentValidator(new Document_Impl, &xmlValidator);
+	dom::Document *	document	= new DocumentValidator(Document_Impl::getInstance(), &xmlValidator);
 	dom::Element *	root		= 0;
 	dom::Element *	child		= 0;
 	dom::Attr *	attr		= 0;
@@ -246,7 +246,7 @@ void testIterator(int argc, char** argv)
 	//   </element>
 	// </document>
 	//
-	dom::Document *	document	= new Document_Impl;
+	dom::Document *	document	= Document_Impl::getInstance();
 	dom::Element *	root		= document->createElement("document");
 	document->appendChild(root);
 	printf("< 0x%08lx > (Last and highest node out of iterator)\n", (unsigned long )root);

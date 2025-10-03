@@ -4,6 +4,7 @@
         "Director.C": "cpp",
         "Test.C": "cpp",
         "Document.C": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "string": "cpp"
     }
 }

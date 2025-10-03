@@ -43,12 +43,26 @@ namespace dom
 	};
 };
 
+// Singleton w/ Abstract Factory pattern
 class Document_Impl : public virtual dom::Document, public virtual Node_Impl
 {
 public:
 	Document_Impl(void);
 
 	virtual ~Document_Impl();
+
+	// Singleton - Delete copy constructor and assignment
+    Document_Impl(const Document_Impl&) = delete;
+    Document_Impl& operator=(const Document_Impl&) = delete;
+
+	// Singleton - Create instance if it doesn't exist, return the instance
+    static Document_Impl* getInstance() {
+		static Document_Impl* instance = nullptr; // created on first use
+		if (instance == nullptr) {
+			instance = new Document_Impl();
+		}
+        return instance;
+    }
 
 	//
 	// Serialization Data Extraction Strategy

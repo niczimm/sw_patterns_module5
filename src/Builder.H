@@ -24,7 +24,7 @@ private:
 	virtual const std::string	trim(const std::string & s) const;
 
 	// Singleton - Private constructor so clients cannot create more than one instance
-	Builder() : factory(new Document_Impl()), currentElement(0), currentAttr(0) {}
+	Builder() : factory(Document_Impl::getInstance()), currentElement(0), currentAttr(0) {}
 
 public:
 
