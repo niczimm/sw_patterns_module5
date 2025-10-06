@@ -7,6 +7,9 @@
 #include "Attr.H"
 #include "Text.H"
 
+// Forward declaration for ProxyElement
+class ProxyElement;
+
 void Builder::addValue(const std::string & text)
 {
 	elementStack.top()->appendChild(static_cast<dom::Node *>(factory->createTextNode(trim(text))));
@@ -25,9 +28,19 @@ void Builder::createAttribute(const std::string & attribute)
 
 void Builder::createElement(const std::string & tag)
 {
-	currentElement	= factory->createElement(trim(tag));
-
-	if (elementStack.size() == 0)	// This is the root element.
+	currentElement = factory->createProxyElement(trim(tag));  // Use ProxyElement for lazy loading
+	
+	// Record the current file position as the start of potential children
+	if (xmlFile != nullptr) {
+		std::streampos currentPos = xmlFile->tellg();
+		ProxyElement* proxy = dynamic_cast<ProxyElement*>(currentElement);
+		if (proxy) {
+			// Set a preliminary position - we'll update the end position later
+			proxy->setChildrenPosition(xmlFile, tokenizer, currentPos, currentPos);
+		}
+	}
+	
+	if (elementStack.size() == 0)
 		factory->appendChild(currentElement);
 	else
 		elementStack.top()->appendChild(currentElement);
@@ -57,6 +70,16 @@ bool Builder::popElement(void)
 
 void Builder::pushElement(void)
 {
+	// Before pushing, update the children end position for the current element
+	if (currentElement != nullptr && xmlFile != nullptr) {
+		ProxyElement* proxy = dynamic_cast<ProxyElement*>(currentElement);
+		if (proxy) {
+			std::streampos currentPos = xmlFile->tellg();
+			// Update with the current position as the end of children area
+			proxy->setChildrenPosition(xmlFile, tokenizer, proxy->getChildrenStartPos(), currentPos);
+		}
+	}
+	
 	elementStack.push(currentElement);
 	currentElement	= 0;
 }
@@ -86,4 +109,13 @@ void Builder::reset() {
     elementStack = {};
     currentElement = nullptr;
     currentAttr = nullptr;
+}
+
+void Builder::setCurrentElementLazyInfo(std::streampos startPos, std::streampos endPos) {
+    if (currentElement != nullptr) {
+        ProxyElement* proxy = dynamic_cast<ProxyElement*>(currentElement);
+        if (proxy && xmlFile != nullptr && tokenizer != nullptr) {
+            proxy->setChildrenPosition(xmlFile, tokenizer, startPos, endPos);
+        }
+    }
 }

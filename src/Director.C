@@ -1,9 +1,14 @@
 #include "Director.H"
 #include "Builder.H"
+#include <cstdio>
 
 Director::Director(const std::string & filename, Builder * builder)
 {
 	XMLTokenizer				tokenizer(filename);
+	
+	// Pass the file and tokenizer to the builder for proxy pattern
+	builder->setFileAndTokenizer(tokenizer.getFileStream(), &tokenizer);
+	
 	State					documentLocation	= BEFORE_PROLOG;
 	XMLTokenizer::XMLToken::TokenTypes	lastToken		= XMLTokenizer::XMLToken::NULL_TOKEN;
 	XMLTokenizer::XMLToken::TokenTypes	currentToken		= XMLTokenizer::XMLToken::NULL_TOKEN;

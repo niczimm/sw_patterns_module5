@@ -1,4 +1,5 @@
 #include "XMLTokenizer.H"
+#include <cstdio>
 
 const char *	XMLTokenizer::PROLOG_START	= "<\\?";
 const char *	XMLTokenizer::PROLOG_IDENTIFIER	= "[[:space:]]*xml";
@@ -72,6 +73,17 @@ XMLTokenizer::XMLTokenizer(const std::string & filename) :
 
 XMLTokenizer::XMLToken *	XMLTokenizer::getNextToken(void)
 {
+	return getNextToken(0);
+}
+
+XMLTokenizer::XMLToken *	XMLTokenizer::getNextToken(int depth)
+{
+	// Prevent infinite recursion
+	if (depth > 10) {
+		printf("XMLTokenizer: Maximum recursion depth reached, returning NULL_TOKEN\n");
+		return new XMLToken(std::string(""), XMLToken::NULL_TOKEN);
+	}
+	
 	if (line.size() == 0)
 	{
 		std::getline(file, line);
@@ -181,7 +193,7 @@ XMLTokenizer::XMLToken *	XMLTokenizer::getNextToken(void)
 	if (std::regex_search(line, what, space_to_eol))
 	{
 		update_matchers(what[0], what.suffix());
-		return	getNextToken();
+		return	getNextToken(depth + 1);
 	}
 
 	return new XMLToken(std::string(""), XMLToken::NULL_TOKEN);

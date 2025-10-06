@@ -82,6 +82,8 @@ public:
 	virtual int		getLineNumber(void)	{ return line_number; }
 	virtual int		getLineCharacter(void)	{ return index; }
 	virtual XMLToken *	getNextToken(void);
+	virtual XMLToken *	getNextToken(int depth);  // Internal method with recursion depth
+	virtual std::fstream*	getFileStream(void)	{ return &file; }
 };
 
 #endif // XMLTOKENIZER_H

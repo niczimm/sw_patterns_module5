@@ -6,6 +6,9 @@
 #include "Node.H"
 #include "NamedNodeMap.H"
 #include "ValidChildren.H"
+#include "Builder.H"
+
+class XMLTokenizer;
 
 namespace dom
 {
@@ -38,6 +41,7 @@ namespace dom
 	};
 };
 
+// Proxy Pattern - Real Subject
 class Element_Impl : public virtual dom::Element, Node_Impl
 {
 private:
@@ -66,6 +70,120 @@ public:
 
 	virtual dom::NamedNodeMap *	getAttributes(void)	{ return &attributes; }
 	virtual bool			hasAttributes(void)	{ return attributes.size() > 0; }
+};
+
+// Proxy Pattern - Virtual Proxy for Element
+class ProxyElement : public virtual dom::Element, public virtual Node_Impl
+{
+private:
+	std::string tagName;
+    NamedNodeMap_Impl attributes;   // same as Element_Impl
+    std::istream* file;             // file reference to resume parsing
+    std::streampos childrenStartPos; // where the element's children begin
+    std::streampos childrenEndPos;   // where the element's children end
+    bool childrenLoaded;            // whether children have been parsed
+	XMLTokenizer* tokenizer;        // tokenizer for parsing children
+
+	void loadChildren(); // parse and load children from file
+	void parseChildrenFromFile(); // actually parse children using tokenizer
+
+protected:
+	dom::Element* getElement();
+
+public:
+	ProxyElement(const std::string& tag, dom::Document * document) : Node_Impl(tag, dom::Node::ELEMENT_NODE), tagName(tag), attributes(document), file(nullptr), childrenStartPos(0), childrenEndPos(0), childrenLoaded(false), tokenizer(nullptr) {}
+	virtual ~ProxyElement();
+
+	// Methods to set file position for lazy loading
+	void setChildrenPosition(std::istream* f, XMLTokenizer* tok, std::streampos startPos, std::streampos endPos) {
+		file = f;
+		tokenizer = tok;
+		childrenStartPos = startPos;
+		childrenEndPos = endPos;
+	}
+	
+	std::streampos getChildrenStartPos() const { return childrenStartPos; }
+
+	//
+	// Serialization Data Extraction Strategy
+	//
+	virtual void serialize(std::fstream * writer, WhitespaceStrategy * whitespace);
+
+	// Known methods from Proxy
+	virtual const std::string &	getTagName(void);
+	virtual dom::NamedNodeMap *	getAttributes(void);
+	virtual bool hasAttributes(void);
+
+	// Implemented attribute methods - delegate to attributes
+	virtual dom::Attr* getAttributeNode(const std::string& name);
+	virtual void setAttribute(const std::string& name, const std::string& value);
+	virtual dom::Attr* setAttributeNode(dom::Attr* newAttr);
+	virtual dom::NodeList* getElementsByTagName(const std::string& tagName);
+	virtual void removeAttribute(const std::string& name);
+	virtual dom::Attr* removeAttributeNode(dom::Attr* oldAttr);
+	virtual const std::string & getAttribute(const std::string & name); // TODO
+	virtual bool hasAttribute(const std::string & name);
+	
+
+	// virtual dom::Attr *		getAttributeNode(const std::string & name)
+	//   { return realElement->getAttributeNode(name); }
+	// virtual dom::NodeList *		getElementsByTagName(const std::string & tagName)
+	//   { return realElement->getElementsByTagName(tagName); }
+	// virtual void			removeAttribute(const std::string & name)
+	//   { realElement->removeAttribute(name); }
+	// virtual dom::Attr *		removeAttributeNode(dom::Attr * oldAttr)
+	//   { return realElement->removeAttributeNode(oldAttr); }
+
+	//
+	// Decorated Methods
+	//
+	// virtual void			setAttribute(const std::string & name, const std::string & value)
+	//   { realElement->setAttribute(name, value); }
+	// virtual dom::Attr *		setAttributeNode(dom::Attr * newAttr)
+	//   { return realElement->setAttributeNode(newAttr); }
+	// virtual dom::Node *		insertBefore(dom::Node * newChild, dom::Node * refChild)
+	//   { return realElement->insertBefore(newChild, refChild); }
+	// virtual dom::Node *		replaceChild(dom::Node * newChild, dom::Node * oldChild)
+	//   { return realElement->replaceChild(newChild, oldChild); }
+	// virtual dom::Node *		appendChild(dom::Node * newChild)
+	//   { return realElement->appendChild(newChild); }
+
+	//
+	// Reimplemented Node members
+	//
+	// virtual dom::NamedNodeMap *	getAttributes(void)
+	//   { return realElement->getAttributes(); }
+	// virtual bool			hasAttributes(void)
+	//   { return realElement->hasAttributes(); }
+	// virtual const std::string &	getNodeName(void)
+	//   { return realElement->getNodeName(); }
+	// virtual const std::string &	getNodeValue(void)
+	//   { return realElement->getNodeValue(); }
+	// virtual void			setNodeValue(const std::string & nodeValue)
+	//   { realElement->setNodeValue(nodeValue); }
+	// virtual short			getNodeType(void)
+	//   { return realElement->getNodeType(); }
+	// virtual dom::Node *		getParentNode(void)
+	//   { return realElement->getParentNode(); }
+	// Override Node methods to trigger lazy loading
+	virtual dom::NodeList *		getChildNodes(void)
+	  { if (!childrenLoaded) loadChildren(); return Node_Impl::getChildNodes(); }
+	virtual dom::Node *		getFirstChild(void)
+	  { if (!childrenLoaded) loadChildren(); return Node_Impl::getFirstChild(); }
+	virtual dom::Node *		getLastChild(void)
+	  { if (!childrenLoaded) loadChildren(); return Node_Impl::getLastChild(); }
+	virtual bool			hasChildNodes(void)
+	  { if (!childrenLoaded) loadChildren(); return Node_Impl::hasChildNodes(); }
+	  
+	// Override mutation methods to ensure children are loaded before modification
+	virtual dom::Node *		appendChild(dom::Node * newChild)
+	  { if (!childrenLoaded) loadChildren(); return Node_Impl::appendChild(newChild); }
+	virtual dom::Node *		insertBefore(dom::Node * newChild, dom::Node * refChild)
+	  { if (!childrenLoaded) loadChildren(); return Node_Impl::insertBefore(newChild, refChild); }
+	virtual dom::Node *		replaceChild(dom::Node * newChild, dom::Node * oldChild)
+	  { if (!childrenLoaded) loadChildren(); return Node_Impl::replaceChild(newChild, oldChild); }
+	virtual dom::Node *		removeChild(dom::Node * oldChild)
+	  { if (!childrenLoaded) loadChildren(); return Node_Impl::removeChild(oldChild); }
 };
 
 class ElementDecorator : public virtual dom::Element

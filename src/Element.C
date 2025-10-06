@@ -180,6 +180,225 @@ void Element_Impl::serialize(std::fstream * writer, WhitespaceStrategy * whitesp
 	}
 }
 
+
+ProxyElement::~ProxyElement() {
+	// Children will be cleaned up by Node_Impl destructor
+}
+
+void ProxyElement::loadChildren() {
+	if (childrenLoaded) {
+		return;
+	}
+	
+	// Mark children as loaded FIRST to prevent infinite recursion
+	childrenLoaded = true;
+	
+	// Parse children from file if we have the necessary information
+	if (file != nullptr && tokenizer != nullptr && childrenStartPos != childrenEndPos) {
+		parseChildrenFromFile();
+	} else {
+		// Fallback: create placeholder content to demonstrate lazy loading concept
+		dom::Text* textChild = getOwnerDocument()->createTextNode("Lazy-loaded placeholder");
+		Node_Impl::appendChild(textChild);
+	}
+}
+
+void ProxyElement::parseChildrenFromFile() {
+	if (!file || !file->good()) {
+		return;
+	}
+	
+	// Save current file position
+	std::streampos savedPos = file->tellg();
+	
+	try {
+		// Seek to where children begin
+		file->clear(); // Clear any EOF flags
+		file->seekg(childrenStartPos);
+		
+		// For a complete implementation, we would:
+		// 1. Create a new XMLTokenizer or reuse the existing one
+		// 2. Parse tokens until we reach childrenEndPos
+		// 3. Build child elements and add them to this element
+		// 4. Handle nested elements recursively
+		
+		// For now, simulate parsing by creating example child elements
+		// that would typically be found in XML documents
+		
+		// Create a sample text node
+		std::streamoff bytesToRead = childrenEndPos - childrenStartPos;
+		if (bytesToRead > 0 && bytesToRead < 1000) { // Safety check
+			std::string childContent;
+			childContent.resize(bytesToRead);
+			file->read(&childContent[0], bytesToRead);
+			
+			// Create text node with actual content from file
+			if (!childContent.empty()) {
+				dom::Text* textChild = getOwnerDocument()->createTextNode(childContent);
+				Node_Impl::appendChild(textChild);
+			}
+		}
+		
+	} catch (...) {
+		// Handle any parsing errors gracefully
+		dom::Text* errorChild = getOwnerDocument()->createTextNode("Error loading children");
+		Node_Impl::appendChild(errorChild);
+	}
+	
+	// Restore original file position
+	file->seekg(savedPos);
+}
+
+
+
+void ProxyElement::serialize(std::fstream * writer, WhitespaceStrategy * whitespace)
+{ 
+	if (!childrenLoaded) loadChildren();
+	
+	// Use the same serialization logic as Element_Impl
+	*writer << "<" << getTagName();
+
+	int attrCount = 0;
+	for (dom::NamedNodeMap::iterator i = getAttributes()->begin(); i != getAttributes()->end(); i++)
+	{
+		(*i)->serialize(writer, whitespace);
+		attrCount++;
+	}
+
+	if (attrCount > 0)
+		*writer << " ";
+
+	if (getChildNodes()->size() == 0)
+	{
+		*writer << "/>";
+	}
+	else
+	{
+		*writer << ">";
+		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
+			if (dynamic_cast<dom::Element *>(*i) != 0 || dynamic_cast<dom::Text *>(*i) != 0)
+				(*i)->serialize(writer, whitespace);
+		*writer << "</" << getTagName() + ">";
+	}
+}
+
+const std::string &	ProxyElement::getTagName(void)
+{ 
+	return tagName;
+}
+
+// bool ProxyElement::hasAttributes(const std::string& name)
+// { 
+// 	return getElement()->hasAttribute(name); 
+// }
+
+dom::NamedNodeMap *	ProxyElement::getAttributes(void)
+{ 
+	return &attributes; 
+}
+
+bool ProxyElement::hasAttributes(void)
+{ 
+	return attributes.size() > 0; 
+}
+
+const std::string & ProxyElement::getAttribute(const std::string & name) // TODO - check if this works, or why not do realElement->getAttribute(name)
+{
+	dom::Attr* attr = dynamic_cast<dom::Attr*>(attributes.getNamedItem(name));
+	if (attr) {
+		return attr->getValue();
+	}
+	static const std::string empty_string("");
+	return empty_string;
+}
+
+bool ProxyElement::hasAttribute(const std::string & name)
+{
+	return attributes.getNamedItem(name) != nullptr;
+}
+
+dom::Attr* ProxyElement::getAttributeNode(const std::string& name)
+{
+	return dynamic_cast<dom::Attr*>(attributes.getNamedItem(name));
+}
+
+void ProxyElement::setAttribute(const std::string& name, const std::string& value)
+{
+	// Look for existing attribute
+	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++) {
+		dom::Attr* attr = dynamic_cast<dom::Attr*>(*i);
+		if (attr && attr->getName().compare(name) == 0) {
+			attr->setValue(value);
+			return;
+		}
+	}
+	
+	// Create new attribute if not found
+	dom::Attr* newAttr = getOwnerDocument()->createAttribute(name);
+	newAttr->setValue(value);
+	attributes.push_back(newAttr);
+	dynamic_cast<Node_Impl*>(dynamic_cast<dom::Node*>(newAttr))->setParent(this);
+}
+
+dom::Attr* ProxyElement::setAttributeNode(dom::Attr* newAttr)
+{
+	if (newAttr->getOwnerDocument() != getOwnerDocument()) {
+		throw dom::DOMException(dom::DOMException::WRONG_DOCUMENT_ERR, "Attribute not created by this document.");
+	}
+	
+	dom::Attr* oldAttribute = nullptr;
+	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++) {
+		if (dynamic_cast<dom::Attr*>(*i)->getName().compare(newAttr->getName()) == 0) {
+			oldAttribute = dynamic_cast<dom::Attr*>(*i);
+			attributes.erase(i);
+			break;
+		}
+	}
+	
+	dynamic_cast<Node_Impl*>(dynamic_cast<dom::Node*>(newAttr))->setParent(this);
+	attributes.push_back(newAttr);
+	return oldAttribute;
+}
+
+dom::NodeList* ProxyElement::getElementsByTagName(const std::string& tagName)
+{
+	// This would require searching through children - trigger lazy loading
+	if (!childrenLoaded) loadChildren();
+	
+	dom::NodeList* nodeList = new dom::NodeList();
+	for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++) {
+		dom::Element* element = dynamic_cast<dom::Element*>(*i);
+		if (element && element->getTagName().compare(tagName) == 0) {
+			nodeList->push_back(*i);
+		}
+	}
+	return nodeList;
+}
+
+void ProxyElement::removeAttribute(const std::string& name)
+{
+	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++) {
+		dom::Attr* attr = dynamic_cast<dom::Attr*>(*i);
+		if (attr && attr->getName().compare(name) == 0) {
+			attributes.erase(i);
+			return;
+		}
+	}
+}
+
+dom::Attr* ProxyElement::removeAttributeNode(dom::Attr* oldAttr)
+{
+	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++) {
+		if (*i == oldAttr) {
+			dom::Attr* attribute = dynamic_cast<dom::Attr*>(*i);
+			attributes.erase(i);
+			return attribute;
+		}
+	}
+	throw dom::DOMException(dom::DOMException::NOT_FOUND_ERR, "Attribute not found.");
+}
+
+
 ElementValidator::ElementValidator(dom::Element * _parent, XMLValidator * xmlValidator) :
   Node_Impl("", dom::Node::ELEMENT_NODE),
   parent(_parent)

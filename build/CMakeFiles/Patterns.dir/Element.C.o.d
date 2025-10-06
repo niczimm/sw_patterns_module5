@@ -958,7 +958,10 @@ CMakeFiles/Patterns.dir/Element.C.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__filesystem/u8path.h \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/NamedNodeMap.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/ValidChildren.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Builder.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Document.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLTokenizer.H \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/regex \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Attr.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Text.H \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Document.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLValidator.H
