@@ -255,30 +255,32 @@ void ProxyElement::serialize(std::fstream * writer, WhitespaceStrategy * whitesp
 { 
 	if (!childrenLoaded) loadChildren();
 	
-	// Use the same serialization logic as Element_Impl
+	// Use the exact same serialization logic as Element_Impl with proper whitespace handling
+	whitespace->prettyIndentation(writer);  // Add proper indentation for opening tag
 	*writer << "<" << getTagName();
 
-	int attrCount = 0;
 	for (dom::NamedNodeMap::iterator i = getAttributes()->begin(); i != getAttributes()->end(); i++)
-	{
 		(*i)->serialize(writer, whitespace);
-		attrCount++;
-	}
-
-	if (attrCount > 0)
-		*writer << " ";
 
 	if (getChildNodes()->size() == 0)
 	{
 		*writer << "/>";
+		whitespace->newLine(writer);
 	}
 	else
 	{
 		*writer << ">";
+		whitespace->newLine(writer);
+		whitespace->incrementIndentation();
+
 		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
 			if (dynamic_cast<dom::Element *>(*i) != 0 || dynamic_cast<dom::Text *>(*i) != 0)
 				(*i)->serialize(writer, whitespace);
+
+		whitespace->decrementIndentation();
+		whitespace->prettyIndentation(writer);
 		*writer << "</" << getTagName() + ">";
+		whitespace->newLine(writer);
 	}
 }
 

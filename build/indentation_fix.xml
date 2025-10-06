@@ -1,0 +1,17 @@
+<? xml version="1.0" encoding="UTF-8"?>
+<document>
+	Lazy-loaded placeholder
+	<element attribute="ttribute valu">
+		Lazy-loaded placeholder
+	</element>
+	<element>
+		Lazy-loaded placeholder
+	</element>
+	<element attribute="ttribute valu" attribute2="ttribute2 valu">
+		Lazy-loaded placeholder
+		Element Value
+	</element>
+	<element>
+		Lazy-loaded placeholder
+	</element>
+</document>

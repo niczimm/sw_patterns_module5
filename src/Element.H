@@ -91,7 +91,9 @@ protected:
 	dom::Element* getElement();
 
 public:
-	ProxyElement(const std::string& tag, dom::Document * document) : Node_Impl(tag, dom::Node::ELEMENT_NODE), tagName(tag), attributes(document), file(nullptr), childrenStartPos(0), childrenEndPos(0), childrenLoaded(false), tokenizer(nullptr) {}
+	ProxyElement(const std::string& tag, dom::Document * document) : Node_Impl(tag, dom::Node::ELEMENT_NODE), tagName(tag), attributes(document), file(nullptr), childrenStartPos(0), childrenEndPos(0), childrenLoaded(false), tokenizer(nullptr) {
+		Node_Impl::document = document;  // Set the document reference like Element_Impl does
+	}
 	virtual ~ProxyElement();
 
 	// Methods to set file position for lazy loading

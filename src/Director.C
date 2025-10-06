@@ -1,252 +1,130 @@
 #include "Director.H"
 #include "Builder.H"
 #include <cstdio>
+#include <regex>
 
 Director::Director(const std::string & filename, Builder * builder)
 {
-	XMLTokenizer				tokenizer(filename);
-	
-	// Pass the file and tokenizer to the builder for proxy pattern
-	builder->setFileAndTokenizer(tokenizer.getFileStream(), &tokenizer);
-	
-	State					documentLocation	= BEFORE_PROLOG;
-	XMLTokenizer::XMLToken::TokenTypes	lastToken		= XMLTokenizer::XMLToken::NULL_TOKEN;
-	XMLTokenizer::XMLToken::TokenTypes	currentToken		= XMLTokenizer::XMLToken::NULL_TOKEN;
-	XMLTokenizer::XMLToken *		token			= 0;
+	try {
+		XMLTokenizer				tokenizer(filename);
+		
+		// Pass the file and tokenizer to the builder for proxy pattern
+		builder->setFileAndTokenizer(tokenizer.getFileStream(), &tokenizer);
+		
+		XMLTokenizer::XMLToken* token = nullptr;
+	bool skipProlog = false;
 
-	do
+	while ((token = tokenizer.getNextToken())->getTokenType() != XMLTokenizer::XMLToken::NULL_TOKEN) {
+
+	if (skipProlog) {
+	if (token->getTokenType() == XMLTokenizer::XMLToken::TAG_END) {
+	skipProlog = false;
+	}
+	delete token;
+	continue;
+	}
+
+	switch (token->getTokenType()) {
+	case XMLTokenizer::XMLToken::PROLOG_START:
+	builder->createProlog();
+	skipProlog = true;
+	break;
+
+	case XMLTokenizer::XMLToken::TAG_START:
+	delete token;
+	token = tokenizer.getNextToken();
+	if (token->getTokenType() == XMLTokenizer::XMLToken::ELEMENT) {
+	builder->createElement(token->getToken());
+	}
+	break;
+
+	case XMLTokenizer::XMLToken::ATTRIBUTE:
 	{
-		token		= tokenizer.getNextToken();
-		currentToken	= token->getTokenType();
+	std::string attrToken = token->getToken();
+	std::string name = attrToken;
+	
+	// Handle attribute tokens that may include "=" - extract just the name part
+	size_t eqPos = attrToken.find("=");
+	if (eqPos != std::string::npos) {
+		name = attrToken.substr(0, eqPos);
+	}
+	
+	// Remove leading/trailing whitespace from the name
+	name = std::regex_replace(name, std::regex("^\\s+|\\s+$"), "");
 
-		switch(documentLocation)
-		{
-		case BEFORE_PROLOG:
-			switch(lastToken)
-			{
-			case XMLTokenizer::XMLToken::NULL_TOKEN:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::PROLOG_START:
-					builder->createProlog();
-					documentLocation	= AFTER_PROLOG;
-					break;
-				default:
-					break;
-				}
-			default:
-				// Shouldn't be able to get here.
-				break;
-			}
-			break;
-		case AFTER_PROLOG:
-			switch(lastToken)
-			{
-			case XMLTokenizer::XMLToken::PROLOG_START:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::PROLOG_IDENTIFIER:
-					builder->identifyProlog(token->getToken());
-					break;
-				default:
-					break;
-				}
-				break;
-			case XMLTokenizer::XMLToken::PROLOG_IDENTIFIER:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::ATTRIBUTE:
-					builder->createAttribute(token->getToken());
-					break;
-				case XMLTokenizer::XMLToken::PROLOG_END:
-					builder->endProlog();
-					documentLocation	= PARSING_ELEMENT;
-					break;
-				default:
-					break;
-				}
-				break;
-			case XMLTokenizer::XMLToken::ATTRIBUTE:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::ATTRIBUTE_VALUE:
-					builder->valueAttribute(token->getToken());
-					break;
-				default:
-					break;
-				}
-				break;
-			case XMLTokenizer::XMLToken::ATTRIBUTE_VALUE:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::ATTRIBUTE:
-					builder->createAttribute(token->getToken());
-					break;
-				case XMLTokenizer::XMLToken::PROLOG_END:
-					builder->endProlog();
-					documentLocation	= PARSING_ELEMENT;
-					break;
-				default:
-					break;
-				}
-				break;
-			default:
-				break;
-			}
-		case PARSING_ELEMENT:
-			switch(lastToken)
-			{
-			case XMLTokenizer::XMLToken::TAG_START:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::ELEMENT:
-					builder->createElement(token->getToken());
-					break;
-				default:
-					break;
-				}
-				break;
-			case XMLTokenizer::XMLToken::ELEMENT:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::ATTRIBUTE:
-					builder->createAttribute(token->getToken());
-					break;
-				case XMLTokenizer::XMLToken::TAG_END:
-					documentLocation	= IN_NONNULL_ELEMENT;
-					builder->pushElement();
-					break;
-				case XMLTokenizer::XMLToken::NULL_TAG_END:
-					break;
-				default:
-					break;
-				}
-				break;
-			case XMLTokenizer::XMLToken::ATTRIBUTE:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::ATTRIBUTE_VALUE:
-					builder->valueAttribute(token->getToken());
-					break;
-				default:
-					break;
-				}
-				break;
-			case XMLTokenizer::XMLToken::ATTRIBUTE_VALUE:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::ATTRIBUTE:
-					builder->createAttribute(token->getToken());
-					break;
-				case XMLTokenizer::XMLToken::TAG_END:
-					documentLocation	= IN_NONNULL_ELEMENT;
-					builder->pushElement();
-					break;
-				case XMLTokenizer::XMLToken::NULL_TAG_END:
-					break;
-				default:
-					break;
-				}
-				break;
-			case XMLTokenizer::XMLToken::PROLOG_END:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::TAG_START:
-					// Actually create element when we read tag name.
-					break;
-				default:
-					break;
-				}
-				break;
-			case XMLTokenizer::XMLToken::NULL_TAG_END:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::TAG_START:
-					// Actually create element when we read tag name.
-					break;
-				case XMLTokenizer::XMLToken::TAG_CLOSE_START:
-					documentLocation	= IN_NONNULL_ELEMENT;
-					break;
-				default:
-					break;
-				}
-				break;
-			default:
-				break;
-			}
-			break;
-		case IN_NONNULL_ELEMENT:
-			switch(lastToken)
-			{
-			case XMLTokenizer::XMLToken::ELEMENT:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::TAG_END:
-					if (!builder->popElement())
-						documentLocation	= END;
-					break;
-				default:
-					break;
-				}
-				break;
-			case XMLTokenizer::XMLToken::TAG_END:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::TAG_START:
-					documentLocation	= PARSING_ELEMENT;
-					// Actually create element when we read tag name.
-					break;
-				case XMLTokenizer::XMLToken::VALUE:
-					builder->addValue(token->getToken());
-					break;
-				case XMLTokenizer::XMLToken::TAG_CLOSE_START:
-					break;
-				default:
-					break;
-				}
-				break;
-			case XMLTokenizer::XMLToken::VALUE:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::TAG_CLOSE_START:
-					break;
-				default:
-					break;
-				}
-			case XMLTokenizer::XMLToken::TAG_CLOSE_START:
-				switch(currentToken)
-				{
-				case XMLTokenizer::XMLToken::ELEMENT:
-					builder->confirmElement(token->getToken());
-					break;
-				default:
-					break;
-				}
-				break;
-			default:
-				break;
-			}
-			break;
-		case END:
-			switch(currentToken)
-			{
-			case XMLTokenizer::XMLToken::NULL_TOKEN:
-				break;
-			default:
-				break;
-			}
-			break;
-		default:
-			// Shouldn't be able to get here.
-			break;
-		}
+	builder->createAttribute(name);
 
-		lastToken	= currentToken;
+	delete token;
+	token = tokenizer.getNextToken();
+	if (token->getTokenType() == XMLTokenizer::XMLToken::ATTRIBUTE_VALUE) {
+	std::string value = token->getToken();
+	// Simple quote removal
+	if (value.length() >= 2 && (value[0] == '"' || value[0] == '\'') && 
+		(value[value.length()-1] == '"' || value[value.length()-1] == '\'')) {
+		value = value.substr(1, value.length() - 2);
+	}
+	builder->valueAttribute(value);
+	}
+	}
+	break;
 
-		if (token != 0)
-			delete token;
-	} while(currentToken != XMLTokenizer::XMLToken::NULL_TOKEN);
+	case XMLTokenizer::XMLToken::TAG_END:
+	builder->pushElement();
+	break;
+
+	case XMLTokenizer::XMLToken::VALUE:
+	if (!token->getToken().empty()) {
+	std::string value = token->getToken();
+	value = std::regex_replace(value, std::regex("^\\s+|\\s+$"), "");
+	if (!value.empty()) {
+	builder->addValue(value);
+	}
+	}
+	break;
+
+	case XMLTokenizer::XMLToken::TAG_CLOSE_START:
+	delete token;
+	token = tokenizer.getNextToken();
+	if (token->getTokenType() == XMLTokenizer::XMLToken::ELEMENT) {
+	builder->confirmElement(token->getToken());
+	}
+	delete token;
+	token = tokenizer.getNextToken();
+	if (token->getTokenType() == XMLTokenizer::XMLToken::TAG_END) {
+	builder->popElement();
+	}
+	break;
+
+	case XMLTokenizer::XMLToken::NULL_TAG_END:
+	builder->pushElement();
+	builder->popElement();
+	break;
+
+	default:
+	break;
+	}
+
+	if (token != nullptr) {
+	delete token;
+	}
+	}
+
+	if (token != nullptr) {
+	delete token;
+	}
 
 	// Build is complete, reset the builder:
 	builder->reset();
+	
+	} catch (dom::DOMException& e) {
+		printf("DOMException caught in Director: Reason=%d, Description=%s\n", 
+		       e.getReason(), e.getDescription().c_str());
+		throw; // Re-throw to let caller handle
+	} catch (const std::exception& e) {
+		printf("Exception caught in Director: %s\n", e.what());
+		throw; // Re-throw to let caller handle
+	} catch (...) {
+		printf("Unknown exception caught in Director\n");
+		throw; // Re-throw to let caller handle
+	}
 }

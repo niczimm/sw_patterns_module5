@@ -291,4 +291,6 @@ void testDirector(int argc, char** argv)
 	std::fstream	file(argv[3], std::ios_base::out);
 	XMLSerializer	xmlSerializer(&file);
 	xmlSerializer.serializePretty(builder->getDocument());
+	file.close();
+
 }

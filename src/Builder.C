@@ -12,7 +12,11 @@ class ProxyElement;
 
 void Builder::addValue(const std::string & text)
 {
-	elementStack.top()->appendChild(static_cast<dom::Node *>(factory->createTextNode(trim(text))));
+	// Use the same document that created the current element to avoid document mismatch
+	dom::Element* currentElem = elementStack.top();
+	dom::Document* elemDoc = currentElem->getOwnerDocument();
+	dom::Text* textNode = elemDoc->createTextNode(trim(text));
+	currentElem->appendChild(static_cast<dom::Node *>(textNode));
 }
 
 void Builder::confirmElement(const std::string & tag)
@@ -23,7 +27,9 @@ void Builder::confirmElement(const std::string & tag)
 void Builder::createAttribute(const std::string & attribute)
 {
 	std::string	trimmed	= trim(attribute);
-	currentAttr	= factory->createAttribute(std::string(trimmed, 0, trimmed.size() - 1));
+	// Use the same document that created the current element
+	dom::Document* elemDoc = currentElement ? currentElement->getOwnerDocument() : factory;
+	currentAttr	= elemDoc->createAttribute(trimmed);  // Don't truncate the attribute name
 }
 
 void Builder::createElement(const std::string & tag)
