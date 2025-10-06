@@ -34,7 +34,7 @@ void Builder::createAttribute(const std::string & attribute)
 
 void Builder::createElement(const std::string & tag)
 {
-	currentElement = factory->createProxyElement(trim(tag));  // Use ProxyElement for lazy loading
+	currentElement = factory->createElement(trim(tag));  // Use ProxyElement for lazy loading
 	
 	// Record the current file position as the start of potential children
 	if (xmlFile != nullptr) {

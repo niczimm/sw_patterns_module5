@@ -31,8 +31,7 @@ namespace dom
 		//
 		virtual void serialize(std::fstream * writer, WhitespaceStrategy * whitespace)	= 0;
 
-		virtual Element *	createElement(const std::string& tagName)	= 0;
-		virtual Element *	createProxyElement(const std::string& tagName)	= 0;  // For lazy loading
+		virtual Element *	createElement(const std::string& tagName)	= 0; // Returns ProxyElement for lazy loading
 		virtual Text *		createTextNode(const std::string & data)	= 0;
 		virtual Attr *		createAttribute(const std::string & name)	= 0;
 		virtual Element *	getDocumentElement()				= 0;
@@ -71,7 +70,6 @@ public:
 	virtual void serialize(std::fstream * writer, WhitespaceStrategy * whitespace);
 
 	virtual dom::Element *	createElement(const std::string& tagName);
-	virtual dom::Element *	createProxyElement(const std::string& tagName);  // For lazy loading
 	virtual dom::Text *	createTextNode(const std::string & data);
 	virtual dom::Attr *	createAttribute(const std::string & name);
 	virtual dom::Element *	getDocumentElement();
@@ -122,7 +120,6 @@ public:
 	// Undecorated pass-through methods.
 	//
 	virtual dom::Element *	createElement(const std::string & tagName)	{ return parent->createElement(tagName); }
-	virtual dom::Element *	createProxyElement(const std::string & tagName)	{ return parent->createProxyElement(tagName); }
 	virtual dom::Text *	createTextNode(const std::string & data)	{ return parent->createTextNode(data); }
 	virtual dom::Attr *	createAttribute(const std::string & name)	{ return parent->createAttribute(name); }
 	virtual dom::Element *	getDocumentElement()				{ return parent->getDocumentElement(); }

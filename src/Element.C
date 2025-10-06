@@ -196,7 +196,7 @@ void ProxyElement::loadChildren() {
 	childrenLoaded = true;
 	
 	// Create the real element now that it's needed
-	realElement = getOwnerDocument()->createElement(tagName);
+	realElement = new Element_Impl(tagName, getOwnerDocument());
 	
 	// Copy all attributes from proxy to real element (create new attributes to avoid "in use" error)
 	for (dom::NamedNodeMap::iterator i = attributes.begin(); i != attributes.end(); i++) {

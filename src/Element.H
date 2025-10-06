@@ -50,6 +50,7 @@ protected:
 	Element_Impl(const std::string & tagName, dom::Document * document);
 public:
 	friend class Document_Impl;
+	friend class ProxyElement;  // Allow ProxyElement to create real elements
 
 	virtual ~Element_Impl();
 
@@ -104,7 +105,6 @@ public:
 		childrenStartPos = startPos;
 		childrenEndPos = endPos;
 	}
-	
 	std::streampos getChildrenStartPos() const { return childrenStartPos; }
 
 	//
@@ -112,12 +112,11 @@ public:
 	//
 	virtual void serialize(std::fstream * writer, WhitespaceStrategy * whitespace);
 
-	// Known methods from Proxy
 	virtual const std::string &	getTagName(void);
 	virtual dom::NamedNodeMap *	getAttributes(void);
 	virtual bool hasAttributes(void);
 	
-	// Override getOwnerDocument to ensure it always returns the correct document
+	// Always return the correct document
 	virtual dom::Document *		getOwnerDocument(void) { return Node_Impl::document; }
 
 	// Implemented attribute methods - delegate to attributes
@@ -127,28 +126,28 @@ public:
 	virtual dom::NodeList* getElementsByTagName(const std::string& tagName);
 	virtual void removeAttribute(const std::string& name);
 	virtual dom::Attr* removeAttributeNode(dom::Attr* oldAttr);
-	virtual const std::string & getAttribute(const std::string & name); // TODO
+	virtual const std::string & getAttribute(const std::string & name);
 	virtual bool hasAttribute(const std::string & name);
 
 	// Override Node methods to delegate to real element once loaded
 	virtual dom::NodeList *		getChildNodes(void)
-	  { loadChildren(); return realElement ? realElement->getChildNodes() : Node_Impl::getChildNodes(); }
+	  { loadChildren(); return realElement->getChildNodes();}
 	virtual dom::Node *		getFirstChild(void)
-	  { loadChildren(); return realElement ? realElement->getFirstChild() : Node_Impl::getFirstChild(); }
+	  { loadChildren(); return realElement->getFirstChild(); }
 	virtual dom::Node *		getLastChild(void)
-	  { loadChildren(); return realElement ? realElement->getLastChild() : Node_Impl::getLastChild(); }
+	  { loadChildren(); return realElement->getLastChild(); }
 	virtual bool			hasChildNodes(void)
-	  { loadChildren(); return realElement ? realElement->hasChildNodes() : Node_Impl::hasChildNodes(); }
-	  
+	  { loadChildren(); return realElement->hasChildNodes(); }
+
 	// Override mutable methods to delegate to real element once loaded
 	virtual dom::Node *		appendChild(dom::Node * newChild)
-	  { loadChildren(); return realElement ? realElement->appendChild(newChild) : Node_Impl::appendChild(newChild); }
+	  { loadChildren(); return realElement->appendChild(newChild); }
 	virtual dom::Node *		insertBefore(dom::Node * newChild, dom::Node * refChild)
-	  { loadChildren(); return realElement ? realElement->insertBefore(newChild, refChild) : Node_Impl::insertBefore(newChild, refChild); }
+	  { loadChildren(); return realElement->insertBefore(newChild, refChild); }
 	virtual dom::Node *		replaceChild(dom::Node * newChild, dom::Node * oldChild)
-	  { loadChildren(); return realElement ? realElement->replaceChild(newChild, oldChild) : Node_Impl::replaceChild(newChild, oldChild); }
+	  { loadChildren(); return realElement->replaceChild(newChild, oldChild); }
 	virtual dom::Node *		removeChild(dom::Node * oldChild)
-	  { loadChildren(); return realElement ? realElement->removeChild(oldChild) : Node_Impl::removeChild(oldChild); }
+	  { loadChildren(); return realElement->removeChild(oldChild); }
 };
 
 class ElementDecorator : public virtual dom::Element
