@@ -78,7 +78,7 @@ XMLTokenizer::XMLToken *	XMLTokenizer::getNextToken(void)
 
 XMLTokenizer::XMLToken *	XMLTokenizer::getNextToken(int depth)
 {
-	// Prevent infinite recursion
+	// Prevent infinite recursion - ran into this problem during testing with malformed XML
 	if (depth > 10) {
 		printf("XMLTokenizer: Maximum recursion depth reached, returning NULL_TOKEN\n");
 		return new XMLToken(std::string(""), XMLToken::NULL_TOKEN);

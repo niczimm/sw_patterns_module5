@@ -34,16 +34,12 @@ void Builder::createAttribute(const std::string & attribute)
 
 void Builder::createElement(const std::string & tag)
 {
-	currentElement = factory->createElement(trim(tag));  // Use ProxyElement for lazy loading
+	currentElement = factory->createElement(trim(tag));  // Uses ProxyElement for lazy loading
 	
 	// Record the current file position as the start of potential children
 	if (xmlFile != nullptr) {
 		std::streampos currentPos = xmlFile->tellg();
-		ProxyElement* proxy = dynamic_cast<ProxyElement*>(currentElement);
-		if (proxy) {
-			// Set a preliminary position - we'll update the end position later
-			proxy->setChildrenPosition(xmlFile, tokenizer, currentPos, currentPos);
-		}
+		currentElement->setChildrenPosition(xmlFile, tokenizer, currentPos, currentPos);
 	}
 	
 	if (elementStack.size() == 0)
@@ -78,12 +74,9 @@ void Builder::pushElement(void)
 {
 	// Before pushing, update the children end position for the current element
 	if (currentElement != nullptr && xmlFile != nullptr) {
-		ProxyElement* proxy = dynamic_cast<ProxyElement*>(currentElement);
-		if (proxy) {
-			std::streampos currentPos = xmlFile->tellg();
-			// Update with the current position as the end of children area
-			proxy->setChildrenPosition(xmlFile, tokenizer, proxy->getChildrenStartPos(), currentPos);
-		}
+		std::streampos currentPos = xmlFile->tellg();
+		// Update with the current position as the end of children area
+		currentElement->setChildrenPosition(xmlFile, tokenizer, currentElement->getChildrenStartPos(), currentPos);
 	}
 	
 	elementStack.push(currentElement);
@@ -119,9 +112,8 @@ void Builder::reset() {
 
 void Builder::setCurrentElementLazyInfo(std::streampos startPos, std::streampos endPos) {
     if (currentElement != nullptr) {
-        ProxyElement* proxy = dynamic_cast<ProxyElement*>(currentElement);
-        if (proxy && xmlFile != nullptr && tokenizer != nullptr) {
-            proxy->setChildrenPosition(xmlFile, tokenizer, startPos, endPos);
+        if (xmlFile != nullptr && tokenizer != nullptr) {
+            currentElement->setChildrenPosition(xmlFile, tokenizer, startPos, endPos);
         }
     }
 }

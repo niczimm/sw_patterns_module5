@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <regex>
 
+// Subbed in my director implementation since professor's wasn't working for me
 Director::Director(const std::string & filename, Builder * builder)
 {
 	try {

@@ -38,6 +38,11 @@ namespace dom
 
 		virtual dom::NamedNodeMap *	getAttributes(void)							= 0;
 		virtual bool			hasAttributes(void)							= 0;
+
+		void setChildrenPosition(std::istream* f, XMLTokenizer* t, std::streampos startPos, std::streampos endPos) {
+			// Element_Impl does not support lazy loading, so this is a no-op
+		} 
+		std::streampos getChildrenStartPos() const {return 0;} // no-op
 	};
 };
 

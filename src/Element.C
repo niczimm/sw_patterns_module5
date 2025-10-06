@@ -211,9 +211,9 @@ void ProxyElement::loadChildren() {
 	if (file != nullptr && tokenizer != nullptr && childrenStartPos != childrenEndPos) {
 		parseChildrenFromFile();
 	} else {
-		// Fallback: create placeholder content to demonstrate lazy loading concept
-		dom::Text* textChild = getOwnerDocument()->createTextNode("Lazy-loaded placeholder");
-		realElement->appendChild(textChild);
+		// Testing: creates placeholder content to demonstrate lazy loading
+		// dom::Text* textChild = getOwnerDocument()->createTextNode("Lazy-loaded placeholder");
+		// realElement->appendChild(textChild);
 	}
 }
 
