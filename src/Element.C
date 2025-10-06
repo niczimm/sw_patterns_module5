@@ -180,9 +180,12 @@ void Element_Impl::serialize(std::fstream * writer, WhitespaceStrategy * whitesp
 	}
 }
 
-
 ProxyElement::~ProxyElement() {
-	// Children will be cleaned up by Node_Impl destructor
+	// Clean up the real element if it was created
+	if (realElement) {
+		delete realElement;
+		realElement = nullptr;
+	}
 }
 
 void ProxyElement::loadChildren() {
@@ -190,8 +193,19 @@ void ProxyElement::loadChildren() {
 		return;
 	}
 	
-	// Mark children as loaded FIRST to prevent infinite recursion
 	childrenLoaded = true;
+	
+	// Create the real element now that it's needed
+	realElement = getOwnerDocument()->createElement(tagName);
+	
+	// Copy all attributes from proxy to real element (create new attributes to avoid "in use" error)
+	for (dom::NamedNodeMap::iterator i = attributes.begin(); i != attributes.end(); i++) {
+		dom::Attr* attr = dynamic_cast<dom::Attr*>(*i);
+		if (attr) {
+			// Create a new attribute with the same name and value
+			realElement->setAttribute(attr->getName(), attr->getValue());
+		}
+	}
 	
 	// Parse children from file if we have the necessary information
 	if (file != nullptr && tokenizer != nullptr && childrenStartPos != childrenEndPos) {
@@ -199,8 +213,13 @@ void ProxyElement::loadChildren() {
 	} else {
 		// Fallback: create placeholder content to demonstrate lazy loading concept
 		dom::Text* textChild = getOwnerDocument()->createTextNode("Lazy-loaded placeholder");
-		Node_Impl::appendChild(textChild);
+		realElement->appendChild(textChild);
 	}
+}
+
+dom::Element* ProxyElement::getElement() {
+	if (!childrenLoaded) loadChildren();
+	return realElement ? realElement : this; // Return real element if loaded, otherwise proxy
 }
 
 void ProxyElement::parseChildrenFromFile() {
@@ -253,10 +272,16 @@ void ProxyElement::parseChildrenFromFile() {
 
 void ProxyElement::serialize(std::fstream * writer, WhitespaceStrategy * whitespace)
 { 
-	if (!childrenLoaded) loadChildren();
+	loadChildren();
 	
-	// Use the exact same serialization logic as Element_Impl with proper whitespace handling
-	whitespace->prettyIndentation(writer);  // Add proper indentation for opening tag
+	// If real element is loaded, delegate serialization to it
+	if (realElement) {
+		realElement->serialize(writer, whitespace);
+		return;
+	}
+	
+	// Fallback: use proxy's own serialization logic
+	whitespace->prettyIndentation(writer);
 	*writer << "<" << getTagName();
 
 	for (dom::NamedNodeMap::iterator i = getAttributes()->begin(); i != getAttributes()->end(); i++)
@@ -288,11 +313,6 @@ const std::string &	ProxyElement::getTagName(void)
 { 
 	return tagName;
 }
-
-// bool ProxyElement::hasAttributes(const std::string& name)
-// { 
-// 	return getElement()->hasAttribute(name); 
-// }
 
 dom::NamedNodeMap *	ProxyElement::getAttributes(void)
 { 
