@@ -1,6 +1,6 @@
 CMakeFiles/Patterns.dir/Node.C.o: \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Node.C \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Node.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/Node.C \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/Node.H \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/string \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__algorithm/max.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__algorithm/comp.h \
@@ -773,7 +773,7 @@ CMakeFiles/Patterns.dir/Node.C.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__bit/bit_width.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__bit/endian.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__bit/has_single_bit.h \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/NodeList.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/NodeList.H \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/list \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/functional \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__functional/binary_negate.h \
@@ -900,7 +900,7 @@ CMakeFiles/Patterns.dir/Node.C.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__functional/perfect_forward.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__functional/bind_back.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__functional/bind_front.h \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/WhitespaceStrategy.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/WhitespaceStrategy.H \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/fstream \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/filesystem \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__filesystem/copy_options.h \

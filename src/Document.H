@@ -31,6 +31,7 @@ namespace dom
 		//
 		virtual void serialize(std::fstream * writer, WhitespaceStrategy * whitespace)	= 0;
 
+		// Idiom - Virtual Constructors
 		virtual Element *	createElement(const std::string& tagName)	= 0; // Returns ProxyElement for lazy loading
 		virtual Text *		createTextNode(const std::string & data)	= 0;
 		virtual Attr *		createAttribute(const std::string & name)	= 0;

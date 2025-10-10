@@ -1,6 +1,6 @@
 CMakeFiles/Patterns.dir/ValidChildren.C.o: \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/ValidChildren.C \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/ValidChildren.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/ValidChildren.C \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/ValidChildren.H \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/vector \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__algorithm/copy.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__algorithm/copy_move_common.h \

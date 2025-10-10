@@ -1,6 +1,6 @@
 CMakeFiles/Patterns.dir/Director.C.o: \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Director.C \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Director.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/Director.C \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/Director.H \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/string \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__algorithm/max.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__algorithm/comp.h \
@@ -773,7 +773,7 @@ CMakeFiles/Patterns.dir/Director.C.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__bit/bit_width.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__bit/endian.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__bit/has_single_bit.h \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLTokenizer.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/XMLTokenizer.H \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/fstream \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__locale \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__locale_dir/locale_base_api.h \
@@ -954,10 +954,10 @@ CMakeFiles/Patterns.dir/Director.C.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/__filesystem/u8path.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/regex \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Builder.H \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Document.H \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Node.H \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/NodeList.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/Builder.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/Document.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/Node.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/NodeList.H \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/list \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/WhitespaceStrategy.H \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/ValidChildren.H
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/WhitespaceStrategy.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod6/src/ValidChildren.H

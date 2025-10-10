@@ -64,6 +64,7 @@ void testTokenizer(int argc, char** argv)
 {
 	dom::Document *	document	= Document_Impl::getInstance();
 
+	// Idiom - Virtual Constructor - Polymorphic creation of objects
 	dom::Element *	element	= document->createElement("NewElement");
 	dom::Text *	text	= document->createTextNode("Text Data");
 	dom::Attr *	attr	= document->createAttribute("NewAttribute");
@@ -84,21 +85,18 @@ void testTokenizer(int argc, char** argv)
 	{
 		XMLTokenizer	tokenizer(argv[i]);
 
-		XMLTokenizer::XMLToken *	token	= 0;
+		std::unique_ptr<XMLTokenizer::XMLToken> token(tokenizer.getNextToken());
 
 		printf("File:  '%s'\n", argv[i]);
 
 		do
 		{
-			delete	token;
-			token	= tokenizer.getNextToken();
+			token.reset(tokenizer.getNextToken());
 
 			printf("\tLine %d:  %s = '%s'\n", tokenizer.getLineNumber(),
 			  token->toString(), token->getToken().size() == 0 ? "" : token->getToken().c_str());
 
 		} while (token->getTokenType() != XMLTokenizer::XMLToken::NULL_TOKEN);
-
-		delete	token;
 	}
 }
 
@@ -149,15 +147,26 @@ void testSerializer(int argc, char** argv)
 	//
 	// Serialize
 	//
-	std::fstream *	file	= 0;
-	XMLSerializer	xmlSerializer(file = new std::fstream(argv[2], std::ios_base::out));
-	xmlSerializer.serializePretty(document);
-	delete file;
-	XMLSerializer	xmlSerializer2(file = new std::fstream(argv[3], std::ios_base::out));
-	xmlSerializer2.serializeMinimal(document);
-	delete file;
+	// Previous implementation of file stream handling - not exception safe
+	// std::fstream *	file	= 0;
+	// XMLSerializer	xmlSerializer(file = new std::fstream(argv[2], std::ios_base::out));
+	// xmlSerializer.serializePretty(document);
+	// delete file;
+	// XMLSerializer	xmlSerializer2(file = new std::fstream(argv[3], std::ios_base::out));
+	// xmlSerializer2.serializeMinimal(document);
+	// delete file;
 
-	// delete Document and tree.
+	// Idiom - Resource Acquisition Is Initialization (RAII) for resource management
+	// Ensures that resources are properly released when they go out of scope
+	// Prevents resource leaks in case of exceptions
+	std::fstream file(argv[2], std::ios_base::out);
+	XMLSerializer	xmlSerializer(&file);
+	xmlSerializer.serializePretty(document);
+
+	std::fstream file2(argv[3], std::ios_base::out);
+	XMLSerializer	xmlSerializer2(&file2);
+	xmlSerializer2.serializeMinimal(document);
+	// file automatically closed when it goes out of scope
 }
 
 void testValidator(int argc, char** argv)
@@ -223,12 +232,11 @@ void testValidator(int argc, char** argv)
 	//
 	// Serialize
 	//
-	std::fstream *	file	= 0;
-	XMLSerializer	xmlSerializer(file = new std::fstream(argv[2], std::ios_base::out));
+	// Idiom - RAII
+	std::fstream file(argv[2], std::ios_base::out);
+	XMLSerializer	xmlSerializer(&file);
 	xmlSerializer.serializePretty(document);
-	delete file;
 
-	// delete Document and tree.
 }
 
 void testIterator(int argc, char** argv)
