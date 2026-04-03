@@ -31,7 +31,7 @@ namespace dom
 		//
 		virtual void serialize(std::fstream * writer, WhitespaceStrategy * whitespace)	= 0;
 
-		virtual Element *	createElement(const std::string & tagName)	= 0;
+		virtual Element *	createElement(const std::string& tagName)	= 0; // Returns ProxyElement for lazy loading
 		virtual Text *		createTextNode(const std::string & data)	= 0;
 		virtual Attr *		createAttribute(const std::string & name)	= 0;
 		virtual Element *	getDocumentElement()				= 0;
@@ -49,7 +49,6 @@ class Document_Impl : public virtual dom::Document, public virtual Node_Impl
 private:
 	Document_Impl(void);
 public:
-
 	virtual ~Document_Impl();
 
 	// Singleton - Delete copy constructor and assignment
@@ -70,7 +69,7 @@ public:
 	//
 	virtual void serialize(std::fstream * writer, WhitespaceStrategy * whitespace);
 
-	virtual dom::Element *	createElement(const std::string & tagName);
+	virtual dom::Element *	createElement(const std::string& tagName);
 	virtual dom::Text *	createTextNode(const std::string & data);
 	virtual dom::Attr *	createAttribute(const std::string & name);
 	virtual dom::Element *	getDocumentElement();

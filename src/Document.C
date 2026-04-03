@@ -21,7 +21,7 @@ void Document_Impl::serialize(std::fstream * writer, WhitespaceStrategy * whites
 
 dom::Element *	Document_Impl::createElement(const std::string & tagName)
 {
-	return new Element_Impl(tagName, this);
+	return new ProxyElement(tagName, this);
 }
 
 dom::Text *	Document_Impl::createTextNode(const std::string & data)

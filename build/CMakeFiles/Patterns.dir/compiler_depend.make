@@ -1734,6 +1734,7 @@ CMakeFiles/Patterns.dir/Builder.C.o: /Users/nicolezimmerer/JH/sw_patterns/Mod5/s
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/print \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/queue \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/ratio \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/regex \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stack \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stdexcept \
@@ -1922,7 +1923,8 @@ CMakeFiles/Patterns.dir/Builder.C.o: /Users/nicolezimmerer/JH/sw_patterns/Mod5/s
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/NodeList.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Text.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/ValidChildren.H \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/WhitespaceStrategy.H
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/WhitespaceStrategy.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLTokenizer.H
 
 CMakeFiles/Patterns.dir/Director.C.o: /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Director.C \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/Availability.h \
@@ -3661,6 +3663,7 @@ CMakeFiles/Patterns.dir/Document.C.o: /Users/nicolezimmerer/JH/sw_patterns/Mod5/
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/print \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/queue \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/ratio \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/regex \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stack \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stdexcept \
@@ -3841,6 +3844,7 @@ CMakeFiles/Patterns.dir/Document.C.o: /Users/nicolezimmerer/JH/sw_patterns/Mod5/
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stdint.h \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Attr.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Builder.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Document.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Element.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/NamedNodeMap.H \
@@ -3849,6 +3853,7 @@ CMakeFiles/Patterns.dir/Document.C.o: /Users/nicolezimmerer/JH/sw_patterns/Mod5/
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Text.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/ValidChildren.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/WhitespaceStrategy.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLTokenizer.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLValidator.H
 
 CMakeFiles/Patterns.dir/Element.C.o: /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Element.C \
@@ -4625,6 +4630,7 @@ CMakeFiles/Patterns.dir/Element.C.o: /Users/nicolezimmerer/JH/sw_patterns/Mod5/s
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/print \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/queue \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/ratio \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/regex \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stack \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stdexcept \
@@ -4805,6 +4811,7 @@ CMakeFiles/Patterns.dir/Element.C.o: /Users/nicolezimmerer/JH/sw_patterns/Mod5/s
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stdint.h \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Attr.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Builder.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Document.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Element.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/NamedNodeMap.H \
@@ -4813,6 +4820,7 @@ CMakeFiles/Patterns.dir/Element.C.o: /Users/nicolezimmerer/JH/sw_patterns/Mod5/s
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Text.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/ValidChildren.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/WhitespaceStrategy.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLTokenizer.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLValidator.H
 
 CMakeFiles/Patterns.dir/NamedNodeMap.C.o: /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/NamedNodeMap.C \
@@ -5589,6 +5597,7 @@ CMakeFiles/Patterns.dir/NamedNodeMap.C.o: /Users/nicolezimmerer/JH/sw_patterns/M
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/print \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/queue \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/ratio \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/regex \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stack \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stdexcept \
@@ -5769,12 +5778,15 @@ CMakeFiles/Patterns.dir/NamedNodeMap.C.o: /Users/nicolezimmerer/JH/sw_patterns/M
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stdint.h \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Attr.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Builder.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Document.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Element.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/NamedNodeMap.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Node.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/NodeList.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/ValidChildren.H \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/WhitespaceStrategy.H
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/WhitespaceStrategy.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLTokenizer.H
 
 CMakeFiles/Patterns.dir/Node.C.o: /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Node.C \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/Availability.h \
@@ -10307,6 +10319,7 @@ CMakeFiles/Patterns.dir/XMLSerializer.C.o: /Users/nicolezimmerer/JH/sw_patterns/
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/print \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/queue \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/ratio \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/regex \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stack \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stdexcept \
@@ -10487,6 +10500,7 @@ CMakeFiles/Patterns.dir/XMLSerializer.C.o: /Users/nicolezimmerer/JH/sw_patterns/
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stdint.h \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Attr.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Builder.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Document.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Element.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/NamedNodeMap.H \
@@ -10495,7 +10509,8 @@ CMakeFiles/Patterns.dir/XMLSerializer.C.o: /Users/nicolezimmerer/JH/sw_patterns/
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Text.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/ValidChildren.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/WhitespaceStrategy.H \
-  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLSerializer.H
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLSerializer.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLTokenizer.H
 
 CMakeFiles/Patterns.dir/XMLTokenizer.C.o: /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLTokenizer.C \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/Availability.h \
@@ -12226,6 +12241,7 @@ CMakeFiles/Patterns.dir/XMLValidator.C.o: /Users/nicolezimmerer/JH/sw_patterns/M
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/print \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/queue \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/ratio \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/regex \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stack \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/stdexcept \
@@ -12405,12 +12421,15 @@ CMakeFiles/Patterns.dir/XMLValidator.C.o: /Users/nicolezimmerer/JH/sw_patterns/M
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stdarg.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/stdint.h \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Builder.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Document.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Element.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/NamedNodeMap.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Node.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/NodeList.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/ValidChildren.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/WhitespaceStrategy.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLTokenizer.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLValidator.H
 
 
@@ -12432,15 +12451,15 @@ CMakeFiles/Patterns.dir/XMLValidator.C.o: /Users/nicolezimmerer/JH/sw_patterns/M
 
 /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Document.C:
 
-/Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLTokenizer.H:
-
 /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Director.H:
-
-/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/regex:
 
 /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Director.C:
 
+/Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLTokenizer.H:
+
 /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Text.H:
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/regex:
 
 /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Builder.C:
 

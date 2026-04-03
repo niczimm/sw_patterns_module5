@@ -7,9 +7,16 @@
 #include "Attr.H"
 #include "Text.H"
 
+// Forward declaration for ProxyElement
+class ProxyElement;
+
 void Builder::addValue(const std::string & text)
 {
-	elementStack.top()->appendChild(static_cast<dom::Node *>(factory->createTextNode(trim(text))));
+	// Use the same document that created the current element to avoid document mismatch
+	dom::Element* currentElem = elementStack.top();
+	dom::Document* elemDoc = currentElem->getOwnerDocument();
+	dom::Text* textNode = elemDoc->createTextNode(trim(text));
+	currentElem->appendChild(static_cast<dom::Node *>(textNode));
 }
 
 void Builder::confirmElement(const std::string & tag)
@@ -20,14 +27,22 @@ void Builder::confirmElement(const std::string & tag)
 void Builder::createAttribute(const std::string & attribute)
 {
 	std::string	trimmed	= trim(attribute);
-	currentAttr	= factory->createAttribute(std::string(trimmed, 0, trimmed.size() - 1));
+	// Use the same document that created the current element
+	dom::Document* elemDoc = currentElement ? currentElement->getOwnerDocument() : factory;
+	currentAttr	= elemDoc->createAttribute(trimmed);  // Don't truncate the attribute name
 }
 
 void Builder::createElement(const std::string & tag)
 {
-	currentElement	= factory->createElement(trim(tag));
-
-	if (elementStack.size() == 0)	// This is the root element.
+	currentElement = factory->createElement(trim(tag));  // Uses ProxyElement for lazy loading
+	
+	// Record the current file position as the start of potential children
+	if (xmlFile != nullptr) {
+		std::streampos currentPos = xmlFile->tellg();
+		currentElement->setChildrenPosition(xmlFile, tokenizer, currentPos, currentPos);
+	}
+	
+	if (elementStack.size() == 0)
 		factory->appendChild(currentElement);
 	else
 		elementStack.top()->appendChild(currentElement);
@@ -57,6 +72,13 @@ bool Builder::popElement(void)
 
 void Builder::pushElement(void)
 {
+	// Before pushing, update the children end position for the current element
+	if (currentElement != nullptr && xmlFile != nullptr) {
+		std::streampos currentPos = xmlFile->tellg();
+		// Update with the current position as the end of children area
+		currentElement->setChildrenPosition(xmlFile, tokenizer, currentElement->getChildrenStartPos(), currentPos);
+	}
+	
 	elementStack.push(currentElement);
 	currentElement	= 0;
 }
@@ -86,4 +108,12 @@ void Builder::reset() {
     elementStack = {};
     currentElement = nullptr;
     currentAttr = nullptr;
+}
+
+void Builder::setCurrentElementLazyInfo(std::streampos startPos, std::streampos endPos) {
+    if (currentElement != nullptr) {
+        if (xmlFile != nullptr && tokenizer != nullptr) {
+            currentElement->setChildrenPosition(xmlFile, tokenizer, startPos, endPos);
+        }
+    }
 }

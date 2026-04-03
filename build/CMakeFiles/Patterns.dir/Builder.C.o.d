@@ -958,6 +958,8 @@ CMakeFiles/Patterns.dir/Builder.C.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/list \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/WhitespaceStrategy.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/ValidChildren.H \
+  /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/XMLTokenizer.H \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/regex \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk/usr/include/c++/v1/iostream \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/Element.H \
   /Users/nicolezimmerer/JH/sw_patterns/Mod5/src/NamedNodeMap.H \
